@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/src/home/view/home_page.dart';
+import 'package:todo_app/src/shared/res/global_theme_data.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
@@ -8,11 +10,11 @@ class TodoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Center(child: Text('Flutter Demo Home Page')),
+      themeMode: ThemeMode.light,
+      theme: GlobalThemeData.lightThemeData,
+      darkTheme: GlobalThemeData.darkThemeData,
+      
+      home: const HomePage(),
     );
   }
 }
