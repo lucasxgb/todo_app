@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/src/home/widgets/custom_bottom_navigation_bar.dart';
+import 'package:todo_app/src/home/widgets/custom_display_task_card.dart';
 import 'package:todo_app/src/home/widgets/custom_float_action_button.dart';
 import 'package:todo_app/src/shared/widgets/app_drawer.dart';
 
@@ -32,17 +33,25 @@ class _HomePageState extends State<HomePage> {
           builder: (context, constraints) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: constraints.maxHeight * 0.5,
-                  ),
-                  SizedBox(
-                    height: constraints.maxHeight * 0.5,
-                  )
-
-                 
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: constraints.maxHeight * 0.49,
+                        child: const CustomDisplayCardTask(
+                          label: "A fazer",
+                        )),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.02,
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.49,
+                      child: const CustomDisplayCardTask(
+                        label: 'Concluída',
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           },
