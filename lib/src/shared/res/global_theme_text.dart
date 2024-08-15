@@ -7,5 +7,8 @@ class GlobalThemeText {
   static TextTheme textTheme = TextTheme(
     titleMedium: textStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
     bodyMedium: textStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+    labelMedium: textStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.2), 
+    labelSmall: textStyle.copyWith(fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: 0.26)
+    
   );
 }

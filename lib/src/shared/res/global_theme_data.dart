@@ -9,6 +9,7 @@ class GlobalThemeData {
       brightness: Brightness.dark,
       primary: Color(0xFF00ADB5),
       onPrimary: Color(0xFFF6F8FC),
+      tertiary: Color(0xFFE4F9F5),
       secondary: Color(0xFFF6F8FC),
       onSecondary: Color(0xFF393E46),
       error: Colors.redAccent,
