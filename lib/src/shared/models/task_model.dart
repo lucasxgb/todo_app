@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class CardTaskModel {
+class TaskModel {
   final String title;
   final String description;
   final DateTime date;
   final bool completed;
 
-  const CardTaskModel({required this.title, required this.description, required this.date, required this.completed});
+  const TaskModel({required this.title, required this.description, required this.date, required this.completed});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -18,8 +18,8 @@ class CardTaskModel {
     };
   }
 
-  factory CardTaskModel.fromMap(Map<String, dynamic> map) {
-    return CardTaskModel(
+  factory TaskModel.fromMap(Map<String, dynamic> map) {
+    return TaskModel(
       title: map['title'] as String,
       description: map['description'] as String,
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
@@ -29,15 +29,15 @@ class CardTaskModel {
 
   String toJson() => json.encode(toMap());
 
-  factory CardTaskModel.fromJson(String source) => CardTaskModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TaskModel.fromJson(String source) => TaskModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  CardTaskModel copyWith({
+  TaskModel copyWith({
     String? title,
     String? description,
     DateTime? date,
     bool? completed,
   }) {
-    return CardTaskModel(
+    return TaskModel(
       title: title ?? this.title,
       description: description ?? this.description,
       date: date ?? this.date,
