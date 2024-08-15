@@ -4,12 +4,10 @@ import 'package:todo_app/src/shared/models/task_model.dart';
 import 'package:todo_app/src/shared/widgets/card_task.dart';
 
 class CustomDisplayCardTask extends StatelessWidget {
-  final String label;
   final List<TaskModel>? tasksList;
 
   const CustomDisplayCardTask({
     super.key,
-    required this.label,
     this.tasksList,
   });
 

@@ -1,7 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class CustomFloatActionButton extends StatelessWidget {
-  const CustomFloatActionButton({super.key});
+  final void Function() onPressed;
+  const CustomFloatActionButton({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -50,7 +50,7 @@ class CustomTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.onTap,
     this.onSubmitted,
-    required this.onSaved,
+    this.onSaved,
     this.validator,
     this.onChanged,
     this.child,
