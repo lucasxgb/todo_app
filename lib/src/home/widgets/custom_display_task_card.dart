@@ -45,7 +45,7 @@ class CustomDisplayCardTask extends StatelessWidget {
                     color: colorScheme.primary.withOpacity(0.1)),
                 child: Center(
                   child: Text(
-                    'Não foram encontradas tarefas',
+                    'Nenhuma tarefa encontrada',
                     style: textTheme.bodyMedium,
                   ),
                 ),
