@@ -75,11 +75,11 @@ class _HomePageState extends State<HomePage> {
                           height: constraints.maxHeight * 0.02,
                         ),
                         SizedBox(
-                            height: controller!.completedTaskList.isEmpty
-                                ? constraints.maxHeight * .4
-                                : constraints.maxHeight,
                             child: CustomDisplayCardTask(
-                                tasksList: controller!.pendingTaskList)),
+                          tasksList: controller!.pendingTaskList,
+                          controller: controller,
+                          constraints: constraints,
+                        )),
                         SizedBox(
                           height: constraints.maxHeight * 0.02,
                         ),
@@ -91,11 +91,10 @@ class _HomePageState extends State<HomePage> {
                           height: constraints.maxHeight * 0.02,
                         ),
                         SizedBox(
-                          height: controller!.completedTaskList.isEmpty
-                              ? constraints.maxHeight * .4
-                              : constraints.maxHeight,
                           child: CustomDisplayCardTask(
                             tasksList: controller!.completedTaskList,
+                            controller: controller,
+                            constraints: constraints,
                           ),
                         )
                       ],

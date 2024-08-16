@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
 
@@ -72,8 +74,8 @@ abstract class _HomeStoreBase with Store {
     int index = _taskList.indexWhere((element) =>
         element.title.toLowerCase() == task.title.toLowerCase() &&
         element.description.toLowerCase() == task.description.toLowerCase());
-
-    _taskList[index].copyWith(completed: value);
+    log('$index');
+    _taskList[index] = _taskList[index].copyWith(completed: value);
   }
 
   @action
