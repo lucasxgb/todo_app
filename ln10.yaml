@@ -1,0 +1,4 @@
+arb-dir: lib/l10n # Diretorio que vai conter as traduções
+template-arb-file: app_en.arb # Diretorio em inglês
+output-localization-file: app_localizations.dart  # Arquivo de localização
+untranslated-messages-file: lib/log_translate.txt # Arquivo de log

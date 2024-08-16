@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/src/home/view/home_page.dart';
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
@@ -18,6 +19,9 @@ class TodoApp extends StatelessWidget {
         theme: GlobalThemeData.lightThemeData,
         darkTheme: GlobalThemeData.darkThemeData,
         home: const HomePage(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        // debugShowCheckedModeBanner: false,
       ),
     );
   }

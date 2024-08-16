@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo_app/src/shared/res/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final double? avaliableHeight;
@@ -88,8 +87,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       minLines: widget.expands == false ? widget.minLines ?? 1 : null,
       expands: widget.expands ?? false,
       style: widget.enabled == false
-          ? textTheme.labelSmall!.copyWith(color: grayDisabledColor)
-          : textTheme.labelSmall!.copyWith(color: colorScheme.primary),
+          ? textTheme.labelSmall!.copyWith(
+              color: colorScheme.primary.withOpacity(0.2),
+            )
+          : textTheme.labelSmall!.copyWith(color: Colors.black),
       decoration: InputDecoration(
         hintStyle: textTheme.labelSmall!
             .copyWith(color: colorScheme.primary.withOpacity(.7)),

@@ -40,6 +40,9 @@ class _TaskFormState extends State<TaskForm> {
         description: controller!.description!,
         date: controller!.date!,
         completed: false));
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -54,6 +57,7 @@ class _TaskFormState extends State<TaskForm> {
               CustomTextFormField(
                 maxLines: 1,
                 expands: false,
+                enabled: !controller!.isLoading,
                 hintText: 'Título da tarefa',
                 controller: titleController,
                 onChanged: controller!.setTitle,
@@ -63,9 +67,10 @@ class _TaskFormState extends State<TaskForm> {
                 height: widget.constraints.maxHeight * .3,
                 child: CustomTextFormField(
                   expands: true,
+                  enabled: !controller!.isLoading,
                   keyboardType: TextInputType.multiline,
                   textAlignVertical: TextAlignVertical.top,
-                  hintText: "Descreva o título da tarefa",
+                  hintText: "Descreva a tarefa",
                   controller: descriptionController,
                   onChanged: controller!.setDescription,
                 ),
@@ -75,28 +80,29 @@ class _TaskFormState extends State<TaskForm> {
                 maxLines: 1,
                 expands: false,
                 readonly: true,
+                enabled: !controller!.isLoading,
                 hintText: 'Selecione a data',
                 controller: dateController,
                 onTap: () async {
                   await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: dateController.text.isNotEmpty
+                        ? DateTime.parse(dateController.text)
+                        : DateTime.now(),
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2024, 12, 12),
                     fieldLabelText: "Selecione a data",
                   ).then((pickedDate) {
-                    if (pickedDate == null) {
-                      dateController.text =
-                          DateFormat("dd/MM/yyyy").format(DateTime.now());
-                    }
-                    dateController.text = DateFormat("dd/MM/yyyy")
+                    dateController.text = DateFormat('yyyy-MM-dd')
                         .format(pickedDate ?? DateTime.now());
+                    controller!.setDateTime(dateController.text);
                   });
                 },
-                onChanged: controller!.setDateTime,
                 suffixIcon: Icon(
                   Icons.calendar_month,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: controller!.isLoading
+                      ? colorScheme.primary.withOpacity(0.2)
+                      : colorScheme.primary,
                 ),
               ),
               SizedBox(height: setSize(widget.constraints.maxHeight, 16)),
@@ -105,8 +111,10 @@ class _TaskFormState extends State<TaskForm> {
                 child: CustomElevatedButton(
                   backgroundColor: colorScheme.primary,
                   textColor: colorScheme.secondary,
-                  text: 'Adicionar tarefa',
-                  onPressed: _onPressed,
+                  text: controller!.isLoading ? null : 'Adicionar tarefa',
+                  onPressed: () async {
+                    await _onPressed();
+                  },
                 ),
               ),
             ],
