@@ -40,6 +40,68 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
+  late final _$titleAtom = Atom(name: '_HomeStoreBase.title', context: context);
+
+  @override
+  String? get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String? value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  late final _$descriptionAtom =
+      Atom(name: '_HomeStoreBase.description', context: context);
+
+  @override
+  String? get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String? value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
+
+  late final _$dateAtom = Atom(name: '_HomeStoreBase.date', context: context);
+
+  @override
+  DateTime? get date {
+    _$dateAtom.reportRead();
+    return super.date;
+  }
+
+  @override
+  set date(DateTime? value) {
+    _$dateAtom.reportWrite(value, super.date, () {
+      super.date = value;
+    });
+  }
+
+  late final _$isCompletedAtom =
+      Atom(name: '_HomeStoreBase.isCompleted', context: context);
+
+  @override
+  bool get isCompleted {
+    _$isCompletedAtom.reportRead();
+    return super.isCompleted;
+  }
+
+  @override
+  set isCompleted(bool value) {
+    _$isCompletedAtom.reportWrite(value, super.isCompleted, () {
+      super.isCompleted = value;
+    });
+  }
+
   late final _$addTaskInListAsyncAction =
       AsyncAction('_HomeStoreBase.addTaskInList', context: context);
 
@@ -71,9 +133,68 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
+  void setTitle(String value) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setTitle');
+    try {
+      return super.setTitle(value);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDescription(String value) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setDescription');
+    try {
+      return super.setDescription(value);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDateTime(String value) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setDateTime');
+    try {
+      return super.setDateTime(value);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCompleted(TaskModel task, bool value) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setCompleted');
+    try {
+      return super.setCompleted(task, value);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetParameters() {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.resetParameters');
+    try {
+      return super.resetParameters();
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
+title: ${title},
+description: ${description},
+date: ${date},
+isCompleted: ${isCompleted},
 completedTaskList: ${completedTaskList},
 pendingTaskList: ${pendingTaskList}
     ''';

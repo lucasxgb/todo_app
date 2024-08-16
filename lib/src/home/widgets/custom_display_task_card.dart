@@ -16,7 +16,7 @@ class CustomDisplayCardTask extends StatelessWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    return tasksList != null
+    return tasksList!.isNotEmpty
         ? ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(0),

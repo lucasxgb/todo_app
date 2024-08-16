@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
 import 'package:todo_app/src/shared/widgets/custom_checkbox.dart';
 
@@ -51,7 +52,9 @@ class CardTask extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "10 de mar",
+                  DateFormat("dd MMM yyyy",
+                          Localizations.localeOf(context).languageCode)
+                      .format(task.date),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: textTheme.bodySmall,

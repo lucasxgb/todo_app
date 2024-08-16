@@ -15,7 +15,9 @@ class CustomFloatActionButton extends StatelessWidget {
       elevation: 1.0,
       backgroundColor: colorScheme.primary,
       shape: const CircleBorder(),
-      onPressed: () {},
+      onPressed: () {
+        onPressed();
+      },
       child: Icon(
         Icons.add_rounded,
         color: colorScheme.secondary,

@@ -7,7 +7,11 @@ class TaskModel {
   final DateTime date;
   final bool completed;
 
-  const TaskModel({required this.title, required this.description, required this.date, required this.completed});
+  const TaskModel(
+      {required this.title,
+      required this.description,
+      required this.date,
+      required this.completed});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -29,7 +33,8 @@ class TaskModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TaskModel.fromJson(String source) => TaskModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TaskModel.fromJson(String source) =>
+      TaskModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   TaskModel copyWith({
     String? title,

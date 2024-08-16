@@ -24,6 +24,8 @@ abstract class _HomeStoreBase with Store {
   @action
   void setLoading() => isLoading = !isLoading;
 
+  /* #######################  BLOCO PARA ADIÇÃO E REMOÇÃO ####################### */
+
   @action
   Future<void> addTaskInList(TaskModel task) async {
     isLoading = true;
@@ -41,5 +43,44 @@ abstract class _HomeStoreBase with Store {
         element.description.toLowerCase() == task.description.toLowerCase());
     _taskList.removeAt(index);
     isLoading = false;
+  }
+
+  /* ############  BLOCO PARA RECEBER E ATUALIZAR INFORMAÇÕES ############### */
+  @observable
+  String? title;
+
+  @action
+  void setTitle(String value) => title = value;
+
+  @observable
+  String? description;
+
+  @action
+  void setDescription(String value) => description = value;
+
+  @observable
+  DateTime? date;
+
+  @action
+  void setDateTime(String value) => date = DateTime.parse(value);
+
+  @observable
+  bool isCompleted = false;
+
+  @action
+  void setCompleted(TaskModel task, bool value) {
+    int index = _taskList.indexWhere((element) =>
+        element.title.toLowerCase() == task.title.toLowerCase() &&
+        element.description.toLowerCase() == task.description.toLowerCase());
+
+    _taskList[index].copyWith(completed: value);
+  }
+
+  @action
+  void resetParameters() {
+    title = null;
+    description = null;
+    date = null;
+    isCompleted = false;
   }
 }

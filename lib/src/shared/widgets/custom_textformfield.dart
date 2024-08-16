@@ -66,15 +66,15 @@ class CustomTextFormField extends StatefulWidget {
   });
 
   @override
-  State<CustomTextFormField> createState() =>
-      _CustomTextFormFieldState();
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
 
-class _CustomTextFormFieldState
-    extends State<CustomTextFormField> {
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return TextFormField(
       initialValue: widget.initialValue,
       inputFormatters: widget.inputFormatters,
@@ -89,34 +89,40 @@ class _CustomTextFormFieldState
       expands: widget.expands ?? false,
       style: widget.enabled == false
           ? textTheme.labelSmall!.copyWith(color: grayDisabledColor)
-          : textTheme.labelSmall!.copyWith(color: Colors.black),
+          : textTheme.labelSmall!.copyWith(color: colorScheme.primary),
       decoration: InputDecoration(
-        hintStyle: widget.hintStyle,
+        hintStyle: textTheme.labelSmall!
+            .copyWith(color: colorScheme.primary.withOpacity(.7)),
         labelText: widget.labelText,
         suffixIcon: widget.suffixIcon,
         suffix: widget.suffix,
         floatingLabelStyle: textTheme.labelMedium,
         hintText: widget.hintText,
+
         prefixIcon: widget.prefixIcon,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
             borderSide: BorderSide(
+              color: colorScheme.primary.withOpacity(0.5),
               width: widget.borderSide ?? 1,
             )),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
             borderSide: BorderSide(
-              width: widget.borderSide ?? 1,
+              color: colorScheme.primary,
+              width: widget.borderSide ?? 1.2,
             )),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
             borderSide: BorderSide(
+              color: colorScheme.primary.withOpacity(0.6),
               width: widget.borderSide ?? 1,
             )),
         // errorBorder: InputBorder.none,
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
             borderSide: BorderSide(
+              color: colorScheme.primary.withOpacity(0.2),
               width: widget.borderSide ?? 1,
             )),
         focusedErrorBorder: InputBorder.none,

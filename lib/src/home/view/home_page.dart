@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/home/widgets/custom_bottom_navigation_bar.dart';
 import 'package:todo_app/src/home/widgets/custom_display_task_card.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final HomeStore controller = HomeStore();
+  HomeStore? controller;
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -27,6 +28,13 @@ class _HomePageState extends State<HomePage> {
               padding: MediaQuery.of(context).viewInsets,
               child: const TaskBottomSheet());
         });
+  }
+
+  @override
+  void initState() {
+    controller = Provider.of<HomeStore>(context, listen: false);
+
+    super.initState();
   }
 
   @override
@@ -67,8 +75,11 @@ class _HomePageState extends State<HomePage> {
                           height: constraints.maxHeight * 0.02,
                         ),
                         SizedBox(
+                            height: controller!.completedTaskList.isEmpty
+                                ? constraints.maxHeight * .4
+                                : constraints.maxHeight,
                             child: CustomDisplayCardTask(
-                                tasksList: controller.pendingTaskList)),
+                                tasksList: controller!.pendingTaskList)),
                         SizedBox(
                           height: constraints.maxHeight * 0.02,
                         ),
@@ -80,8 +91,11 @@ class _HomePageState extends State<HomePage> {
                           height: constraints.maxHeight * 0.02,
                         ),
                         SizedBox(
+                          height: controller!.completedTaskList.isEmpty
+                              ? constraints.maxHeight * .4
+                              : constraints.maxHeight,
                           child: CustomDisplayCardTask(
-                            tasksList: controller.completedTaskList,
+                            tasksList: controller!.completedTaskList,
                           ),
                         )
                       ],

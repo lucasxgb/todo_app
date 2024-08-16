@@ -12,15 +12,24 @@ class CustomCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return SizedBox(
       height: 16,
       width: 16,
       child: Checkbox(
         value: completed,
-        fillColor:
-            MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
-        checkColor: Theme.of(context).colorScheme.secondary,
-        activeColor: Theme.of(context).colorScheme.primary,
+        fillColor: MaterialStateProperty.resolveWith((states) {
+          if (!states.contains(MaterialState.selected)) {
+            return null;
+          } else {
+            return colorScheme.primary;
+          }
+        }),
+
+        // MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
+        checkColor: colorScheme.secondary,
+        activeColor: colorScheme.primary,
         onChanged: (bool? value) {},
       ),
     );
