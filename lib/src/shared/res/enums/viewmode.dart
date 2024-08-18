@@ -1,0 +1,4 @@
+enum ViewMode {
+  edit,
+  view,
+}

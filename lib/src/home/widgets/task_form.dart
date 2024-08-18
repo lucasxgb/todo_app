@@ -3,17 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
+import 'package:todo_app/src/shared/res/enums/input_border_type.dart';
+import 'package:todo_app/src/shared/res/enums/viewmode.dart';
 import 'package:todo_app/src/shared/res/responsive.dart';
 import 'package:todo_app/src/shared/widgets/custom_button.dart';
 import 'package:todo_app/src/shared/widgets/custom_textformfield.dart';
 
 class TaskForm extends StatefulWidget {
   final BoxConstraints constraints;
+  final TextEditingController? titleController;
+  final TextEditingController? dateController;
+  final TextEditingController? descriptionController;
+  final ViewMode? viewMode;
+  final TaskModel? task;
+
   const TaskForm({
     super.key,
     required this.constraints,
+    this.titleController,
+    this.dateController,
+    this.descriptionController,
+    this.viewMode,
+    this.task,
   });
 
   @override
@@ -21,23 +35,26 @@ class TaskForm extends StatefulWidget {
 }
 
 class _TaskFormState extends State<TaskForm> {
-  final titleController = TextEditingController();
-  final dateController = TextEditingController();
-  final descriptionController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   HomeStore? controller;
 
   @override
   void initState() {
     controller = Provider.of<HomeStore>(context, listen: false);
     controller!.resetParameters();
+
+    if (widget.task != null) {
+      widget.titleController!.text = widget.task!.title;
+      widget.descriptionController!.text = widget.task!.description!;
+      widget.dateController!.text = DateFormat('yyyy-MM-dd').format(widget.task!.date!);
+    }
     super.initState();
   }
 
   _onPressed() async {
     await controller!.addTaskInList(TaskModel(
         title: controller!.title!,
-        description: controller!.description!,
+        description: controller!.description,
         date: controller!.date!,
         completed: false));
     if (mounted) {
@@ -47,7 +64,6 @@ class _TaskFormState extends State<TaskForm> {
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Observer(builder: (_) {
       return Form(
@@ -55,47 +71,50 @@ class _TaskFormState extends State<TaskForm> {
           child: Column(
             children: [
               CustomTextFormField(
+                borderType: InputBorderType.outline,
                 maxLines: 1,
                 expands: false,
-                enabled: !controller!.isLoading,
+                enabled: !controller!.isLoading || controller!.isEditable,
                 hintText: 'Título da tarefa',
-                controller: titleController,
+                controller: widget.titleController,
                 onChanged: controller!.setTitle,
               ),
               SizedBox(height: setSize(widget.constraints.maxHeight, 8)),
               SizedBox(
                 height: widget.constraints.maxHeight * .3,
                 child: CustomTextFormField(
+                  borderType: InputBorderType.outline,
                   expands: true,
-                  enabled: !controller!.isLoading,
+                  enabled: !controller!.isLoading || controller!.isEditable,
                   keyboardType: TextInputType.multiline,
                   textAlignVertical: TextAlignVertical.top,
                   hintText: "Descreva a tarefa",
-                  controller: descriptionController,
+                  controller: widget.descriptionController,
                   onChanged: controller!.setDescription,
                 ),
               ),
               SizedBox(height: setSize(widget.constraints.maxHeight, 8)),
               CustomTextFormField(
+                borderType: InputBorderType.outline,
                 maxLines: 1,
                 expands: false,
                 readonly: true,
-                enabled: !controller!.isLoading,
+                enabled: !controller!.isLoading || controller!.isEditable,
                 hintText: 'Selecione a data',
-                controller: dateController,
+                controller: widget.dateController,
                 onTap: () async {
                   await showDatePicker(
                     context: context,
-                    initialDate: dateController.text.isNotEmpty
-                        ? DateTime.parse(dateController.text)
+                    initialDate: widget.dateController!.text.isNotEmpty
+                        ? DateTime.parse(widget.dateController!.text)
                         : DateTime.now(),
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2024, 12, 12),
                     fieldLabelText: "Selecione a data",
                   ).then((pickedDate) {
-                    dateController.text = DateFormat('yyyy-MM-dd')
+                    widget.dateController!.text = DateFormat('yyyy-MM-dd')
                         .format(pickedDate ?? DateTime.now());
-                    controller!.setDateTime(dateController.text);
+                    controller!.setDateTime(widget.dateController!.text);
                   });
                 },
                 suffixIcon: Icon(
@@ -111,7 +130,11 @@ class _TaskFormState extends State<TaskForm> {
                 child: CustomElevatedButton(
                   backgroundColor: colorScheme.primary,
                   textColor: colorScheme.secondary,
-                  text: controller!.isLoading ? null : 'Adicionar tarefa',
+                  text: controller!.isLoading
+                      ? null
+                      : widget.viewMode == ViewMode.edit
+                          ? 'Adicionar tarefa'
+                          : 'Concluir Alterações',
                   onPressed: () async {
                     await _onPressed();
                   },

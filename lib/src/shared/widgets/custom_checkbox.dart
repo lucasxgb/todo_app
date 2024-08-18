@@ -1,13 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:todo_app/src/shared/models/task_model.dart';
 
 class CustomCheckBox extends StatelessWidget {
-  final void Function(bool?)? onChanged;
-  final bool completed;
+  final void Function(TaskModel)? onChanged;
+  final TaskModel task;
   const CustomCheckBox({
     super.key,
-    this.onChanged,
-    required this.completed,
+    required this.task,
+    required this.onChanged,
   });
 
   @override
@@ -18,7 +19,7 @@ class CustomCheckBox extends StatelessWidget {
       height: 16,
       width: 16,
       child: Checkbox(
-        value: completed,
+        value: task.completed,
         fillColor: MaterialStateProperty.resolveWith((states) {
           if (!states.contains(MaterialState.selected)) {
             return null;
@@ -30,7 +31,10 @@ class CustomCheckBox extends StatelessWidget {
         // MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
         checkColor: colorScheme.secondary,
         activeColor: colorScheme.primary,
-        onChanged: (bool? value) {},
+
+        onChanged: (_) {
+          onChanged!(task);
+        },
       ),
     );
   }

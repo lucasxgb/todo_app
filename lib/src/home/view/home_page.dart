@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
-import 'package:todo_app/src/home/widgets/custom_bottom_navigation_bar.dart';
 import 'package:todo_app/src/home/widgets/custom_display_task_card.dart';
 import 'package:todo_app/src/home/widgets/custom_float_action_button.dart';
 import 'package:todo_app/src/home/widgets/task_bottom_sheet.dart';
+import 'package:todo_app/src/shared/res/enums/viewmode.dart';
 import 'package:todo_app/src/shared/widgets/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +18,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomeStore? controller;
 
-  _openTransactionFormModal(BuildContext context) {
+  _openTransactionFormModal(
+    BuildContext context,
+  ) {
     showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
@@ -26,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           return Padding(
               padding: MediaQuery.of(context).viewInsets,
-              child: const TaskBottomSheet());
+              child: const TaskBottomSheet(viewMode: ViewMode.view));
         });
   }
 
@@ -42,11 +44,11 @@ class _HomePageState extends State<HomePage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
         // extendBody: true,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: CustomFloatActionButton(
           onPressed: () => _openTransactionFormModal(context),
         ),
-        bottomNavigationBar: const CustomBottomNavigationBar(),
+        // bottomNavigationBar: const CustomBottomNavigationBar(),
         drawer: const AppDrawer(),
         appBar: AppBar(
           title: Align(

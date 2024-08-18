@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:mobx/mobx.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
 
@@ -42,7 +40,7 @@ abstract class _HomeStoreBase with Store {
     await Future.delayed(const Duration(seconds: 2));
     int index = _taskList.indexWhere((element) =>
         element.title.toLowerCase() == task.title.toLowerCase() &&
-        element.description.toLowerCase() == task.description.toLowerCase());
+        element.description == task.description);
     _taskList.removeAt(index);
     isLoading = false;
   }
@@ -70,12 +68,13 @@ abstract class _HomeStoreBase with Store {
   bool isCompleted = false;
 
   @action
-  void setCompleted(TaskModel task, bool value) {
+  void setCompleted(TaskModel task) {
     int index = _taskList.indexWhere((element) =>
         element.title.toLowerCase() == task.title.toLowerCase() &&
-        element.description.toLowerCase() == task.description.toLowerCase());
-    log('$index');
-    _taskList[index] = _taskList[index].copyWith(completed: value);
+        element.description == task.description);
+    if (index != -1) {
+      _taskList[index] = _taskList[index].copyWith(completed: !task.completed);
+    }
   }
 
   @action
@@ -84,5 +83,23 @@ abstract class _HomeStoreBase with Store {
     description = null;
     date = null;
     isCompleted = false;
+  }
+
+  /* ############### BLOCO RELACIONADO AO CONTROLE E EDIÇÃO ################# */
+
+  @observable
+  bool isEditable = false;
+
+  @action
+  void setEditable() => isEditable = !isEditable;
+
+  @action
+  void editTask(TaskModel task, TaskModel editTask) {
+    int index = _taskList.indexWhere((element) =>
+        element.title.toLowerCase() == task.title.toLowerCase() &&
+        element.description == task.description);
+    if (index != -1) {
+      _taskList[index] = editTask;
+    }
   }
 }

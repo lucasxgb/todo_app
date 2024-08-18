@@ -102,6 +102,22 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
+  late final _$isEditableAtom =
+      Atom(name: '_HomeStoreBase.isEditable', context: context);
+
+  @override
+  bool get isEditable {
+    _$isEditableAtom.reportRead();
+    return super.isEditable;
+  }
+
+  @override
+  set isEditable(bool value) {
+    _$isEditableAtom.reportWrite(value, super.isEditable, () {
+      super.isEditable = value;
+    });
+  }
+
   late final _$addTaskInListAsyncAction =
       AsyncAction('_HomeStoreBase.addTaskInList', context: context);
 
@@ -166,11 +182,11 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
-  void setCompleted(TaskModel task, bool value) {
+  void setCompleted(TaskModel task) {
     final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
         name: '_HomeStoreBase.setCompleted');
     try {
-      return super.setCompleted(task, value);
+      return super.setCompleted(task);
     } finally {
       _$_HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -188,6 +204,28 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
+  void setEditable() {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setEditable');
+    try {
+      return super.setEditable();
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editTask(TaskModel task, TaskModel editTask) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.editTask');
+    try {
+      return super.editTask(task, editTask);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
@@ -195,6 +233,7 @@ title: ${title},
 description: ${description},
 date: ${date},
 isCompleted: ${isCompleted},
+isEditable: ${isEditable},
 completedTaskList: ${completedTaskList},
 pendingTaskList: ${pendingTaskList}
     ''';

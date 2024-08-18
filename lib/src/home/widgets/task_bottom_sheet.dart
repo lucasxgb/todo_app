@@ -1,16 +1,40 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/home/widgets/task_form.dart';
+import 'package:todo_app/src/shared/models/task_model.dart';
+import 'package:todo_app/src/shared/res/enums/viewmode.dart';
 
 class TaskBottomSheet extends StatefulWidget {
-  const TaskBottomSheet({super.key});
+  final ViewMode viewMode;
+  final TaskModel? task;
+  const TaskBottomSheet({
+    super.key,
+    required this.viewMode,
+    this.task,
+  });
 
   @override
   State<TaskBottomSheet> createState() => _TaskBottomSheetState();
 }
 
 class _TaskBottomSheetState extends State<TaskBottomSheet> {
+  final titleController = TextEditingController();
+  final dateController = TextEditingController();
+  final descriptionController = TextEditingController();
+  HomeStore? controller;
+
   double setSize(constraints, value) {
     return constraints * (value / constraints);
+  }
+
+  @override
+  void initState() {
+    controller = Provider.of<HomeStore>(context, listen: false);
+    controller!.isEditable = false;
+    super.initState();
   }
 
   @override
@@ -54,12 +78,57 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   padding: EdgeInsets.only(
                     bottom: setSize(constraints.maxWidth, 16),
                   ),
-                  child: Text(
-                    'Adicione sua tarefa',
-                    style: textTheme.bodyMedium,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        child: Icon(Icons.close_rounded,
+                            color: colorScheme.primary, size: 22),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      Text(
+                        'Adicione sua tarefa',
+                        style: textTheme.bodyMedium,
+                      ),
+                      if (widget.viewMode == ViewMode.edit)
+                        Observer(builder: (_) {
+                          return InkWell(
+                            child: controller!.isEditable
+                                ? Icon(Icons.check_rounded,
+                                    color: colorScheme.primary, size: 22)
+                                : Icon(
+                                    Icons.edit_rounded,
+                                    color: colorScheme.primary,
+                                    size: 22,
+                                  ),
+                            onTap: () async {
+                              if (controller!.isEditable == true) {
+                                controller!.editTask(
+                                    widget.task!,
+                                    widget.task!.copyWith(
+                                        title: titleController.text,
+                                        description: descriptionController.text,
+                                        date: DateTime.parse(
+                                            dateController.text)));
+                                controller!.setEditable();
+                                Navigator.of(context).pop();
+                              }
+                            },
+                          );
+                        }),
+                    ],
                   ),
                 ),
-                TaskForm(constraints: constraints)
+                TaskForm(
+                  constraints: constraints,
+                  viewMode: widget.viewMode,
+                  task: widget.task,
+                  titleController: titleController,
+                  dateController: dateController,
+                  descriptionController: descriptionController,
+                )
               ],
             ),
           );

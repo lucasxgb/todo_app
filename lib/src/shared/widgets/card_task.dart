@@ -1,15 +1,34 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
 import 'package:todo_app/src/shared/widgets/custom_checkbox.dart';
 
-class CardTask extends StatelessWidget {
+class CardTask extends StatefulWidget {
   final TaskModel task;
   const CardTask({
     super.key,
     required this.task,
   });
+
+  @override
+  State<CardTask> createState() => _CardTaskState();
+}
+
+class _CardTaskState extends State<CardTask> {
+  HomeStore? controller;
+
+  @override
+  void initState() {
+    controller = Provider.of<HomeStore>(context, listen: false);
+    controller!.resetParameters();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +48,24 @@ class CardTask extends StatelessWidget {
               flex: 2,
               child: Row(
                 children: [
-                  CustomCheckBox(completed: task.completed),
+                  Observer(builder: (_) {
+                    return CustomCheckBox(
+                      task: widget.task,
+                      onChanged: (_) => controller!.setCompleted(widget.task),
+                    );
+                  }),
                   const SizedBox(
                     width: 8,
                   ),
                   Expanded(
                     child: Text(
-                      task.title,
+                      widget.task.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.bodyMedium!.copyWith(
                           fontSize: 16,
                           letterSpacing: 0.2,
-                          decoration: task.completed
+                          decoration: widget.task.completed
                               ? TextDecoration.lineThrough
                               : TextDecoration.none),
                     ),
@@ -54,7 +78,7 @@ class CardTask extends StatelessWidget {
                 Text(
                   DateFormat("dd MMM yyyy",
                           Localizations.localeOf(context).languageCode)
-                      .format(task.date),
+                      .format(widget.task.date!),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: textTheme.bodySmall,
