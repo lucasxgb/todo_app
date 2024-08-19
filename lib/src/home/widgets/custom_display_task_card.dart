@@ -60,7 +60,7 @@ class CustomDisplayCardTask extends StatelessWidget {
               },
               itemBuilder: ((context, index) {
                 return Dismissible(
-                  key: Key("${tasksList![index]}"),
+                  key: Key("${tasksList!.length}"),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) async {
                     if (location == LocationTask.pending) {
@@ -71,7 +71,10 @@ class CustomDisplayCardTask extends StatelessWidget {
                     }
                     if (context.mounted) {
                       showSnack(
-                          context, text.taskDeleted, textTheme.labelSmall!);
+                          context,
+                          text.taskDeleted,
+                          textTheme.labelSmall!
+                              .copyWith(color: colorScheme.onPrimary));
                     }
                   },
                   background: Container(

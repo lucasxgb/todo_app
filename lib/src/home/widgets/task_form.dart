@@ -125,7 +125,7 @@ class _TaskFormState extends State<TaskForm> {
                   });
                 },
                 suffixIcon: Icon(Icons.calendar_month,
-                    color: !controller!.isEditable || !controller!.isLoading
+                    color: controller!.isEditable || controller!.isLoading
                         ? colorScheme.primary.withOpacity(0.2)
                         : colorScheme.primary),
               ),
