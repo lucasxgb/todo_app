@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
 import 'package:todo_app/src/shared/res/enums/input_border_type.dart';
@@ -46,7 +45,8 @@ class _TaskFormState extends State<TaskForm> {
     if (widget.task != null) {
       widget.titleController!.text = widget.task!.title;
       widget.descriptionController!.text = widget.task!.description!;
-      widget.dateController!.text = DateFormat('yyyy-MM-dd').format(widget.task!.date!);
+      widget.dateController!.text =
+          DateFormat('yyyy-MM-dd').format(widget.task!.date!);
     }
     super.initState();
   }
@@ -65,6 +65,7 @@ class _TaskFormState extends State<TaskForm> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    bool valid = widget.viewMode == ViewMode.edit;
     return Observer(builder: (_) {
       return Form(
           key: formKey,
@@ -74,7 +75,8 @@ class _TaskFormState extends State<TaskForm> {
                 borderType: InputBorderType.outline,
                 maxLines: 1,
                 expands: false,
-                enabled: !controller!.isLoading || controller!.isEditable,
+                enabled:
+                    valid ? controller!.isEditable : !controller!.isLoading,
                 hintText: 'Título da tarefa',
                 controller: widget.titleController,
                 onChanged: controller!.setTitle,
@@ -85,7 +87,8 @@ class _TaskFormState extends State<TaskForm> {
                 child: CustomTextFormField(
                   borderType: InputBorderType.outline,
                   expands: true,
-                  enabled: !controller!.isLoading || controller!.isEditable,
+                  enabled:
+                      valid ? controller!.isEditable : !controller!.isLoading,
                   keyboardType: TextInputType.multiline,
                   textAlignVertical: TextAlignVertical.top,
                   hintText: "Descreva a tarefa",
@@ -99,7 +102,8 @@ class _TaskFormState extends State<TaskForm> {
                 maxLines: 1,
                 expands: false,
                 readonly: true,
-                enabled: !controller!.isLoading || controller!.isEditable,
+                enabled:
+                    valid ? controller!.isEditable : !controller!.isLoading,
                 hintText: 'Selecione a data',
                 controller: widget.dateController,
                 onTap: () async {
@@ -117,12 +121,10 @@ class _TaskFormState extends State<TaskForm> {
                     controller!.setDateTime(widget.dateController!.text);
                   });
                 },
-                suffixIcon: Icon(
-                  Icons.calendar_month,
-                  color: controller!.isLoading
-                      ? colorScheme.primary.withOpacity(0.2)
-                      : colorScheme.primary,
-                ),
+                suffixIcon: Icon(Icons.calendar_month,
+                    color: !controller!.isEditable || controller!.isLoading
+                        ? colorScheme.primary.withOpacity(0.2)
+                        : colorScheme.primary),
               ),
               SizedBox(height: setSize(widget.constraints.maxHeight, 16)),
               Align(
@@ -133,8 +135,8 @@ class _TaskFormState extends State<TaskForm> {
                   text: controller!.isLoading
                       ? null
                       : widget.viewMode == ViewMode.edit
-                          ? 'Adicionar tarefa'
-                          : 'Concluir Alterações',
+                          ? 'Concluir Alterações'
+                          : 'Adicionar tarefa',
                   onPressed: () async {
                     await _onPressed();
                   },

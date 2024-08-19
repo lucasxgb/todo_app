@@ -115,6 +115,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                                 controller!.setEditable();
                                 Navigator.of(context).pop();
                               }
+                              if (controller!.isEditable != true) {
+                                controller!.setEditable();
+                              }
                             },
                           );
                         }),
