@@ -12,5 +12,5 @@ class GlobalThemeText {
       labelMedium: textStyle.copyWith(
           fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.2),
       labelSmall: textStyle.copyWith(
-          fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: 0.26));
+          fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.2));
 }

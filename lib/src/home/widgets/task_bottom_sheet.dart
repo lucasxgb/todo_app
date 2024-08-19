@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
@@ -41,7 +42,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
-
+    final AppLocalizations text = AppLocalizations.of(context)!;
     final deviceInfo = MediaQuery.of(context);
     final deviceHeight = deviceInfo.size.height - deviceInfo.padding.top;
 
@@ -49,7 +50,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       child: Container(
         height: deviceHeight * 0.5,
         decoration: BoxDecoration(
-          color: colorScheme.secondary,
+          color: colorScheme.background,
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16), topRight: Radius.circular(16)),
         ),
@@ -89,8 +90,13 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                         },
                       ),
                       Text(
-                        'Adicione sua tarefa',
-                        style: textTheme.bodyMedium,
+                        widget.viewMode == ViewMode.edit &&
+                                controller!.isEditable
+                            ? text.taskDetails
+                            : text.addYourTask,
+                        style: textTheme.bodyMedium!.copyWith(
+                          color: colorScheme.secondary.withOpacity(0.8),
+                        ),
                       ),
                       if (widget.viewMode == ViewMode.edit)
                         Observer(builder: (_) {

@@ -5,16 +5,18 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/src/home/viewmodel/home_store.dart';
 import 'package:todo_app/src/shared/models/task_model.dart';
+import 'package:todo_app/src/shared/res/enums/location_task.dart';
 import 'package:todo_app/src/shared/widgets/custom_checkbox.dart';
 
 class CardTask extends StatefulWidget {
   final TaskModel task;
   final int index;
-  const CardTask({
-    super.key,
-    required this.task,
-    required this.index,
-  });
+  final LocationTask location;
+  const CardTask(
+      {super.key,
+      required this.task,
+      required this.index,
+      required this.location});
 
   @override
   State<CardTask> createState() => _CardTaskState();
@@ -35,93 +37,107 @@ class _CardTaskState extends State<CardTask> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Container(
-        // margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-            color: colorScheme.primary.withOpacity(0.12),
-            borderRadius: const BorderRadius.all(Radius.circular(8))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircleAvatar(
-                          backgroundColor: colorScheme.primary,
-                          child: Text(
-                            '${widget.index + 1}',
-                            style: textTheme.titleLarge!.copyWith(
-                                fontSize: 18,
-                                color: colorScheme.secondary,
-                                decoration: widget.task.completed
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                decorationColor: colorScheme.secondary),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return Observer(builder: (_) {
+      return Container(
+          // margin: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+              color: colorScheme.primary.withOpacity(0.12),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
-                          Text(
-                            widget.task.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: textTheme.bodyMedium!.copyWith(
-                                fontSize: 16,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.bold,
-                                decoration: widget.task.completed
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none),
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircleAvatar(
+                              backgroundColor: colorScheme.primary,
+                              child: Text(
+                                '${widget.index + 1}',
+                                style: textTheme.titleLarge!.copyWith(
+                                  fontSize: 18,
+                                  color: colorScheme.onPrimary,
+                                  decoration: widget.task.completed
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor:
+                                      colorScheme.primary.withOpacity(0.9),
+                                  decorationStyle: TextDecorationStyle.double,
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(
-                            width: 8,
+                            width: 16,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                DateFormat(
-                                        "dd MMM yyyy",
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    .format(widget.task.date!),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: textTheme.bodySmall!.copyWith(
-                                    color:
-                                        colorScheme.primary.withOpacity(0.8)),
-                              ),
-                            ],
-                          )
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.task.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.bodyMedium!.copyWith(
+                                      fontSize: 16,
+                                      letterSpacing: 0.2,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: widget.task.completed
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                      decorationColor: colorScheme.secondary
+                                          .withOpacity(0.9),
+                                      decorationStyle:
+                                          TextDecorationStyle.solid),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      DateFormat(
+                                              "dd MMM yyyy",
+                                              Localizations.localeOf(context)
+                                                  .languageCode)
+                                          .format(widget.task.date!),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textTheme.bodySmall!.copyWith(
+                                          color: colorScheme.secondary
+                                              .withOpacity(0.8)),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Observer(builder: (_) {
-                    return CustomCheckBox(
-                      task: widget.task,
-                      onChanged: (_) => controller!.setCompleted(widget.task),
-                    );
-                  }),
-                ],
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Transform.scale(
+                      scale: 1.4,
+                      child: CustomCheckBox(
+                        task: widget.task,
+                        onChanged: (_) => controller!
+                            .setCompleted(widget.task, widget.location),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          ));
+    });
   }
 }

@@ -91,12 +91,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       expands: widget.expands ?? false,
       style: widget.enabled == false
           ? textTheme.labelSmall!.copyWith(
-              color: colorScheme.primary.withOpacity(0.2),
+              color: colorScheme.secondary.withOpacity(0.8),
             )
-          : textTheme.labelSmall!.copyWith(color: Colors.black),
+          : textTheme.labelSmall!.copyWith(color: colorScheme.onTertiary),
       decoration: InputDecoration(
         hintStyle: textTheme.labelSmall!
-            .copyWith(color: colorScheme.primary.withOpacity(.7)),
+            .copyWith(color: colorScheme.secondary.withOpacity(.7)),
         labelText: widget.labelText,
         suffixIcon: widget.suffixIcon,
         suffix: widget.suffix,
@@ -108,12 +108,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                 borderSide: BorderSide(
-                  color: colorScheme.primary.withOpacity(0.5),
+                  color: colorScheme.secondary.withOpacity(0.5),
                   width: widget.borderSide ?? 1,
                 ))
             : UnderlineInputBorder(
                 borderSide: BorderSide(
-                color: colorScheme.primary.withOpacity(0.5),
+                color: colorScheme.secondary.withOpacity(0.5),
                 width: widget.borderSide ?? 1,
               )),
 
@@ -121,24 +121,24 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                 borderSide: BorderSide(
-                  color: colorScheme.primary,
+                  color: colorScheme.secondary,
                   width: widget.borderSide ?? 1.2,
                 ))
             : UnderlineInputBorder(
                 borderSide: BorderSide(
-                color: colorScheme.primary,
+                color: colorScheme.secondary,
                 width: widget.borderSide ?? 1.2,
               )),
         enabledBorder: widget.borderType == InputBorderType.outline
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                 borderSide: BorderSide(
-                  color: colorScheme.primary.withOpacity(0.6),
+                  color: colorScheme.secondary.withOpacity(0.6),
                   width: widget.borderSide ?? 1,
                 ))
             : UnderlineInputBorder(
                 borderSide: BorderSide(
-                color: colorScheme.primary.withOpacity(0.6),
+                color: colorScheme.secondary.withOpacity(0.6),
                 width: widget.borderSide ?? 1,
               )),
         // errorBorder: InputBorder.none,
@@ -146,12 +146,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                 borderSide: BorderSide(
-                  color: colorScheme.primary.withOpacity(0.2),
+                  color: colorScheme.secondary.withOpacity(0.2),
                   width: widget.borderSide ?? 1,
                 ))
             : UnderlineInputBorder(
                 borderSide: BorderSide(
-                color: colorScheme.primary.withOpacity(0.2),
+                color: colorScheme.secondary.withOpacity(0.2),
                 width: widget.borderSide ?? 1,
               )),
         focusedErrorBorder: InputBorder.none,

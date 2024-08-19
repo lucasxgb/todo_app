@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class _TaskFormState extends State<TaskForm> {
 
     if (widget.task != null) {
       widget.titleController!.text = widget.task!.title;
-      widget.descriptionController!.text = widget.task!.description!;
+      widget.descriptionController!.text = widget.task!.description ?? "";
       widget.dateController!.text =
           DateFormat('yyyy-MM-dd').format(widget.task!.date!);
     }
@@ -65,6 +66,8 @@ class _TaskFormState extends State<TaskForm> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final AppLocalizations text = AppLocalizations.of(context)!;
+
     bool valid = widget.viewMode == ViewMode.edit;
     return Observer(builder: (_) {
       return Form(
@@ -77,7 +80,7 @@ class _TaskFormState extends State<TaskForm> {
                 expands: false,
                 enabled:
                     valid ? controller!.isEditable : !controller!.isLoading,
-                hintText: 'Título da tarefa',
+                hintText: text.taskTitle,
                 controller: widget.titleController,
                 onChanged: controller!.setTitle,
               ),
@@ -91,7 +94,7 @@ class _TaskFormState extends State<TaskForm> {
                       valid ? controller!.isEditable : !controller!.isLoading,
                   keyboardType: TextInputType.multiline,
                   textAlignVertical: TextAlignVertical.top,
-                  hintText: "Descreva a tarefa",
+                  hintText: text.describeTask,
                   controller: widget.descriptionController,
                   onChanged: controller!.setDescription,
                 ),
@@ -104,7 +107,7 @@ class _TaskFormState extends State<TaskForm> {
                 readonly: true,
                 enabled:
                     valid ? controller!.isEditable : !controller!.isLoading,
-                hintText: 'Selecione a data',
+                hintText: text.selectDate,
                 controller: widget.dateController,
                 onTap: () async {
                   await showDatePicker(
@@ -114,7 +117,7 @@ class _TaskFormState extends State<TaskForm> {
                         : DateTime.now(),
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2024, 12, 12),
-                    fieldLabelText: "Selecione a data",
+                    fieldLabelText: text.selectDate,
                   ).then((pickedDate) {
                     widget.dateController!.text = DateFormat('yyyy-MM-dd')
                         .format(pickedDate ?? DateTime.now());
@@ -122,26 +125,39 @@ class _TaskFormState extends State<TaskForm> {
                   });
                 },
                 suffixIcon: Icon(Icons.calendar_month,
-                    color: !controller!.isEditable || controller!.isLoading
+                    color: !controller!.isEditable || !controller!.isLoading
                         ? colorScheme.primary.withOpacity(0.2)
                         : colorScheme.primary),
               ),
               SizedBox(height: setSize(widget.constraints.maxHeight, 16)),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: CustomElevatedButton(
-                  backgroundColor: colorScheme.primary,
-                  textColor: colorScheme.secondary,
-                  text: controller!.isLoading
-                      ? null
-                      : widget.viewMode == ViewMode.edit
-                          ? 'Concluir Alterações'
-                          : 'Adicionar tarefa',
-                  onPressed: () async {
-                    await _onPressed();
-                  },
+              if (widget.viewMode == ViewMode.view || controller!.isEditable)
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: CustomElevatedButton(
+                    backgroundColor: colorScheme.primary,
+                    textColor: colorScheme.onPrimary,
+                    text: controller!.isLoading
+                        ? null
+                        : widget.viewMode == ViewMode.edit
+                            ? text.completeChanges
+                            : text.addTasks,
+                    onPressed: () async {
+                      if (controller!.isEditable == true) {
+                        controller!.editTask(
+                            widget.task!,
+                            widget.task!.copyWith(
+                                title: widget.titleController!.text,
+                                description: widget.descriptionController!.text,
+                                date: DateTime.parse(
+                                    widget.dateController!.text)));
+                        controller!.setEditable();
+                        Navigator.of(context).pop();
+                      } else {
+                        await _onPressed();
+                      }
+                    },
+                  ),
                 ),
-              ),
             ],
           ));
     });

@@ -16,9 +16,10 @@ class CustomCheckBox extends StatelessWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
-      height: 16,
-      width: 16,
+      height: 26,
+      width: 26,
       child: Checkbox(
+        shape: const CircleBorder(),
         value: task.completed,
         fillColor: MaterialStateProperty.resolveWith((states) {
           if (!states.contains(MaterialState.selected)) {
@@ -29,7 +30,7 @@ class CustomCheckBox extends StatelessWidget {
         }),
 
         // MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
-        checkColor: colorScheme.secondary,
+        checkColor: colorScheme.onPrimary,
         activeColor: colorScheme.primary,
 
         onChanged: (_) {

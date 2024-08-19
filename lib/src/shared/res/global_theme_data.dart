@@ -7,27 +7,27 @@ class GlobalThemeData {
 
   static const ColorScheme darkColorScheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: Color(0xFF00ADB5),
-      onPrimary: Color(0xFFF6F8FC),
-      tertiary: Color(0xFFE4F9F5),
-      onTertiary: Color(0xFFF5F5F5),
+      primary: Color(0xFFF6F8FC),
+      onPrimary: Color(0xFF393E46),
       secondary: Color(0xFFF6F8FC),
       onSecondary: Color(0xFF393E46),
+      tertiary: Colors.black,
+      onTertiary: Colors.white,
       error: Colors.redAccent,
       onError: Color(0xFFEEEEEE),
       background: Color(0xFF222831),
       onBackground: Color(0xFFF6F8FC),
-      surface: Color(0xFFEEEEEE),
-      onSurface: Color(0xFF00ADB5));
+      surface: Color(0xFF393E46),
+      onSurface: Color(0xFFF6F8FC));
 
   static const ColorScheme lightColorScheme = ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFF393E46),
       onPrimary: Color(0xFFF6F8FC),
-      tertiary: Color(0xFF364f6b),
-      onTertiary: Color(0xFF00ADB5),
-      secondary: Color(0xFFF6F8FC),
-      onSecondary: Color(0xFF393E46),
+      secondary: Color(0xFF393E46),
+      onSecondary: Color(0xFFF6F8FC),
+      tertiary: Colors.white,
+      onTertiary: Colors.black,
       error: Colors.redAccent,
       onError: Color(0xFFEEEEEE),
       background: Color(0xFFF6F8FC),

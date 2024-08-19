@@ -1,0 +1,80 @@
+{
+"language":"português",
+"addTasks": "Adicionar tarefas",
+"@addTasks": {
+  "description": "Adicionar tarefas"
+},
+
+"completeChanges": "Concluir Alterações",
+"@completeChanges": {
+  "description": "Concluir Alterações"
+},
+
+"selectDate": "Selecione a data",
+"@selectDate": {
+  "description": "Selecione a data"
+},
+
+"describeTask": "Descreva a tarefa",
+"@describeTask": {
+  "description": "Descreva a tarefa"
+},
+
+"taskTitle": "Título da tarefa",
+"@taskTitle": {
+  "description": "Título da tarefa"
+},
+
+"addYourTask": "Adicione sua tarefa",
+"@addYourTask": {
+  "description": "Adicione sua tarefa"
+},
+
+"taskDetails": "Detalhes da tarefa",
+"@taskDetails": {
+  "description": "Detalhes da tarefa"
+},
+
+"noTasksFound": "Nenhuma tarefa encontrada",
+"@noTasksFound": {
+  "description": "Nenhuma tarefa encontrada"
+},
+
+"toDo": "A fazer",
+"@toDo": {
+  "description": "A fazer"
+},
+
+"completed": "Concluído",
+"@completed": {
+  "description": "Concluído"
+},
+
+"toggleTheme": "Alternar tema",
+"@toggleTheme": {
+  "description": "Alternar tema"
+},
+
+"clickToChangeTheme": "Clique aqui para alterar o tema",
+"@clickToChangeTheme": {
+  "description": "Clique aqui para alterar o tema"
+},
+
+"taskDeleted": "A tarefa foi excluída",
+"@taskDeleted": {
+  "description": "A tarefa foi excluída"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

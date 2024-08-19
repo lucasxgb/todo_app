@@ -20,7 +20,7 @@ class CustomFloatActionButton extends StatelessWidget {
       },
       child: Icon(
         Icons.add_rounded,
-        color: colorScheme.secondary,
+        color: colorScheme.onPrimary,
       ),
     );
   }

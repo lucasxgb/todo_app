@@ -1,0 +1,4 @@
+enum LocationTask {
+  completed,
+  pending;
+}

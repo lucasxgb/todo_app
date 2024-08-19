@@ -118,6 +118,21 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
+  late final _$modeAtom = Atom(name: '_HomeStoreBase.mode', context: context);
+
+  @override
+  bool get mode {
+    _$modeAtom.reportRead();
+    return super.mode;
+  }
+
+  @override
+  set mode(bool value) {
+    _$modeAtom.reportWrite(value, super.mode, () {
+      super.mode = value;
+    });
+  }
+
   late final _$addTaskInListAsyncAction =
       AsyncAction('_HomeStoreBase.addTaskInList', context: context);
 
@@ -132,6 +147,15 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   @override
   Future<void> removeTaskList(TaskModel task) {
     return _$removeTaskListAsyncAction.run(() => super.removeTaskList(task));
+  }
+
+  late final _$removeCompletedTaskListAsyncAction =
+      AsyncAction('_HomeStoreBase.removeCompletedTaskList', context: context);
+
+  @override
+  Future<void> removeCompletedTaskList(TaskModel task) {
+    return _$removeCompletedTaskListAsyncAction
+        .run(() => super.removeCompletedTaskList(task));
   }
 
   late final _$_HomeStoreBaseActionController =
@@ -182,11 +206,22 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
-  void setCompleted(TaskModel task) {
+  int toggleList(ObservableList<TaskModel> taskList, TaskModel task) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.toggleList');
+    try {
+      return super.toggleList(taskList, task);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCompleted(TaskModel task, LocationTask location) {
     final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
         name: '_HomeStoreBase.setCompleted');
     try {
-      return super.setCompleted(task);
+      return super.setCompleted(task, location);
     } finally {
       _$_HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -226,6 +261,17 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
+  void toggleMode() {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.toggleMode');
+    try {
+      return super.toggleMode();
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
@@ -234,6 +280,7 @@ description: ${description},
 date: ${date},
 isCompleted: ${isCompleted},
 isEditable: ${isEditable},
+mode: ${mode},
 completedTaskList: ${completedTaskList},
 pendingTaskList: ${pendingTaskList}
     ''';

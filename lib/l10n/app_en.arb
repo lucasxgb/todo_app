@@ -1,0 +1,79 @@
+{
+"language":"english",
+"addTasks": "Add tasks",
+"@addTasks": {
+  "description": "Add tasks"
+},
+
+"completeChanges": "Complete Changes",
+"@completeChanges": {
+  "description": "Complete Changes"
+},
+
+"selectDate": "Select the date",
+"@selectDate": {
+  "description": "Select the date"
+},
+
+"describeTask": "Describe the task",
+"@describeTask": {
+  "description": "Describe the task"
+},
+
+"taskTitle": "Task title",
+"@taskTitle": {
+  "description": "Task title"
+},
+
+"addYourTask": "Add your task",
+"@addYourTask": {
+  "description": "Add your task"
+},
+
+"taskDetails": "Task details",
+"@taskDetails": {
+  "description": "Task details"
+},
+
+"noTasksFound": "No tasks found",
+"@noTasksFound": {
+  "description": "No tasks found"
+},
+
+"toDo": "To do",
+"@toDo": {
+  "description": "To do"
+},
+
+"completed": "Completed",
+"@completed": {
+  "description": "Completed"
+},
+
+"toggleTheme": "Toggle theme",
+"@toggleTheme": {
+  "description": "Toggle theme"
+},
+
+"clickToChangeTheme": "Click here to change the theme",
+"@clickToChangeTheme": {
+  "description": "Click here to change the theme"
+},
+
+"taskDeleted": "The task has been deleted",
+"@taskDeleted": {
+  "description": "The task has been deleted"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+}
