@@ -1,16 +1,25 @@
-# todo_app
+# Todo App;
 
-A new Flutter project.
+## Essa é uma aplicação desenvolvida para aplicação de conhecimento, posteriormente será atualizada com novas funcionalidades.
 
-## Getting Started
+Nessa aplicação, implementei conceitos importantes como gerenciamento e compartilhamento de estados, configuração de temas, e internacionalização. As principais funcionalidades deste aplicativo são:
 
-This project is a starting point for a Flutter application.
+- Adição e exclusão de tarefas;
 
-A few resources to get you started if this is your first Flutter project:
+- Conclusão de tarefas;
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Suporte para linguas diferentes;
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Suporte para mudança de temas;
+
+
+### Gerenciamento de Estados: 
+Sobre o gerenciamento de estados, utilizei O MOBX, devido a sua praticidade e escalabilidade, imaginando a adição de novas funcionalidades. Para compartilhar o estado em toda aplicação, utilizo o Provider, recuperando a instância do estado onde necessário.
+
+
+### Gerenciamento de Estados: 
+Em relação a organização do projeto, optei por trabalhar com o MVVM, separando cada funcionalidade em módulo, e aplicando a arquitetura em cada módulo.
+
+
+### Temas e Lingua:
+E como bônus, realizei a gerência de temas da aplicação, modo escuro e claro. Por fim apliquei a internacionalização do app, traduzindo os textos comuns da aplicação para a lingua do dispositivo.
